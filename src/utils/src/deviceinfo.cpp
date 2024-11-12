@@ -35,7 +35,11 @@ DeviceInfo::DeviceInfo()
     QFile host(HOST_FILE);
     if (host.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&host);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         in.setCodec("UTF-8");
+#else
+        in.setEncoding(QStringConverter::Utf8);
+#endif
         m_hostname = in.readLine();
         host.close();
     }
@@ -43,7 +47,11 @@ DeviceInfo::DeviceInfo()
     QFile release(OS_RELEASE_FILE);
     if (release.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&release);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         in.setCodec("UTF-8");
+#else
+        in.setEncoding(QStringConverter::Utf8);
+#endif
         QString line = in.readLine();
         for (bool searching{true}; searching && !in.atEnd(); line = in.readLine()) {
             if (line.startsWith("BUILD_ID")) {

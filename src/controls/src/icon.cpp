@@ -32,6 +32,9 @@
 #include <QPainter>
 #include <QIcon>
 #include <QSvgRenderer>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QFile>
+#endif
 
 #define ICONS_DIRECTORY "/usr/share/icons/asteroid/"
 
@@ -79,9 +82,18 @@ void Icon::paint(QPainter *painter)
     painter->drawPixmap(0, 0, width(), height(), m_pixmap);
 }
 
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void Icon::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
+#else
+void Icon::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
+#endif
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QQuickPaintedItem::geometryChanged(newGeometry, oldGeometry);
+#else
+    QQuickPaintedItem::geometryChange(newGeometry, oldGeometry);
+#endif
     if(newGeometry.size() == oldGeometry.size() || newGeometry.width() == 0 || newGeometry.height() == 0)
         return;
     updateBasePixmap();
