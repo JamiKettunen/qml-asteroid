@@ -43,6 +43,16 @@ qt_add_resources(asteroidcontrolsplugin "asteroidcontrolsplugin_qrc"
         "qml/TextBase.qml"
         "qml/TextField.qml"
 )
+qt6_add_shaders(asteroidcontrolsplugin "asteroidcontrolsplugin_shaders"
+    #GLSL "300es,330" # FIXME: drop?
+    BATCHABLE
+    PRECOMPILE
+    OPTIMIZED
+    PREFIX
+        "/org/asteroid/controls/"
+    FILES
+        "qml/Spinner.frag"
+)
 
 set(controls 
         Application
