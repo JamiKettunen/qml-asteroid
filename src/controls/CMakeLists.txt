@@ -11,7 +11,38 @@ set(HEADERS
 	src/flatmeshnode.h
 	src/icon.h)
 
-add_library(asteroidcontrolsplugin ${SRC} ${HEADERS} resources.qrc)
+add_library(asteroidcontrolsplugin ${SRC} ${HEADERS})
+
+qt_add_resources(asteroidcontrolsplugin "asteroidcontrolsplugin_qrc"
+    PREFIX
+        "/org/asteroid/controls/"
+    FILES
+        "qml/Application.qml"
+        "qml/BorderGestureArea.qml"
+        "qml/CircularSpinner.qml"
+        "qml/Dims.qml"
+        "qml/ListItem.qml"
+        "qml/HandWritingKeyboard.qml"
+        "qml/HighlightBar.qml"
+        "qml/IconButton.qml"
+        "qml/Indicator.qml"
+        "qml/Label.qml"
+        "qml/LayerStack.qml"
+        "qml/Marquee.qml"
+        "qml/LabeledSwitch.qml"
+        "qml/LabeledActionButton.qml"
+        "qml/PageDot.qml"
+        "qml/PageHeader.qml"
+        "qml/IntSelector.qml"
+        "qml/SegmentedArc.qml"
+        "qml/SpinnerDelegate.qml"
+        "qml/Spinner.qml"
+        "qml/StatusPage.qml"
+        "qml/Switch.qml"
+        "qml/TextArea.qml"
+        "qml/TextBase.qml"
+        "qml/TextField.qml"
+)
 
 set(controls 
         Application
