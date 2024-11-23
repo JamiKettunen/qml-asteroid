@@ -1,8 +1,11 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(Qt5Qml @QT_MIN_VERSION@)
-find_dependency(Qt5Quick @QT_MIN_VERSION@)
+# TODO: wasn't there a better way especially with 5.15/6 like find_package(Qt COMPONENTS Core REQUIRED)
+if (NOT DEFINED QT_MAJOR_VERSION)
+    set(QT_MAJOR_VERSION 5)
+endif()
+find_package(Qt${QT_MAJOR_VERSION} @QT_MIN_VERSION@ COMPONENTS Qml Quick REQUIRED)
 
 set(ASTEROID_MODULE_PATH "@PACKAGE_ASTEROID_MODULES_INSTALL_DIR@")
 
