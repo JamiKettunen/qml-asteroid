@@ -33,25 +33,11 @@
 #include <QFileInfo>
 #include <MDesktopEntry>
 #include <QTranslator>
-#include <mdeclarativecache/MDeclarativeCache>
-
-static QString applicationPath()
-{
-    QString argv0 = QCoreApplication::arguments()[0];
-
-    if (argv0.startsWith("/")) {
-        // First, try argv[0] if it's an absolute path (needed for booster)
-        return argv0;
-    } else {
-        // If that doesn't give an absolute path, use /proc-based detection
-        return QCoreApplication::applicationFilePath();
-    }
-}
 
 namespace AsteroidApp {
     QString appName()
     {
-        QFileInfo exe = QFileInfo(applicationPath());
+        QFileInfo exe = QFileInfo(QCoreApplication::applicationFilePath());
         return exe.baseName();
     }
 
@@ -60,7 +46,7 @@ namespace AsteroidApp {
         static QGuiApplication *app = NULL;
 
         if (app == NULL) {
-            app = MDeclarativeCache::qApplication(argc, argv);
+            app = new QGuiApplication(argc, argv);
 
             app->setOrganizationName(appName());
             app->setOrganizationDomain(appName());
@@ -78,7 +64,7 @@ namespace AsteroidApp {
 
     QQuickView *createView()
     {
-        QQuickView *view = MDeclarativeCache::qQuickView();
+        QQuickView *view = new QQuickView;
         MDesktopEntry entry("/usr/share/applications/" + appName() + ".desktop");
         if (entry.isValid()) {
             view->setTitle(entry.name());
